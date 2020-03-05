@@ -2,23 +2,17 @@ package com.xts.shop;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.xts.shop.adapter.VpFragmentAdapter;
-import com.xts.shop.adapter.VpImageAdapter;
 import com.xts.shop.ui.fragment.CartFragment;
 import com.xts.shop.ui.fragment.MainPageFragment;
 import com.xts.shop.ui.fragment.MeFragment;
@@ -28,7 +22,7 @@ import com.xts.shop.ui.fragment.TopicFragment;
 import java.util.ArrayList;
 
 //generatefindviewbyid
-public class MainActivity extends AppCompatActivity {
+public class MainActivityBackup extends AppCompatActivity {
 
     private Toolbar mToolBar;
     private ViewPager mVp;
@@ -53,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar();
         vp();
+        //tab();
         //关联viewpager和TabLayout
         mTabLayout.setupWithViewPager(mVp);
         for (int i = 0; i < mFragments.size(); i++) {
@@ -60,6 +55,51 @@ public class MainActivity extends AppCompatActivity {
             TabLayout.Tab tab = mTabLayout.getTabAt(i);
             tab.setCustomView(tabView(i));
         }
+
+/*
+        //关联viewpager和TabLayout,需要他们联动
+        //viewpager翻页监听
+        mVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                //页面滑动回调
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //页面选中回调
+                //让对应的tab选中
+                mTabLayout.getTabAt(position).select();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                //页面滑动状态改名
+            }
+        });
+
+        //tab选中监听
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                //tab选中回调
+                //让viewpager翻到对应页面
+                int position = tab.getPosition();
+                //设置当前的条目
+                mVp.setCurrentItem(position);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                //tab取消选中
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                //tab重复选中
+            }
+        });*/
+
 
     }
 
@@ -73,6 +113,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void vp() {
+        //类似轮播图的使用(view)
+        /*ArrayList<View> views = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            View inflate = LayoutInflater.from(this).inflate(R.layout.tab, null);
+            TextView tv = inflate.findViewById(R.id.tv);
+            tv.setText("页面:"+i);
+            views.add(inflate);
+        }
+
+        VpImageAdapter adapter = new VpImageAdapter(views);
+        mVp.setAdapter(adapter);*/
+
         //配合Fragment使用
         VpFragmentAdapter fragmentAdapter =
                 new VpFragmentAdapter(getSupportFragmentManager(),
@@ -88,6 +140,15 @@ public class MainActivity extends AppCompatActivity {
         //默认的样式里面有ActionBar,需要使用toolbar代替
         //需要在样式中设置为<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         setSupportActionBar(mToolBar);
+    }
+
+    private void tab() {
+        //mTabLayout.addTab(mTabLayout.newTab().setText(R.string.main_page));
+        mTabLayout.addTab(mTabLayout.newTab().setCustomView(tabView(0)));
+        mTabLayout.addTab(mTabLayout.newTab().setCustomView(tabView(1)));
+        mTabLayout.addTab(mTabLayout.newTab().setCustomView(tabView(2)));
+        mTabLayout.addTab(mTabLayout.newTab().setCustomView(tabView(3)));
+        mTabLayout.addTab(mTabLayout.newTab().setCustomView(tabView(4)));
     }
 
     private void initTitles() {
@@ -132,40 +193,4 @@ public class MainActivity extends AppCompatActivity {
         return inflate;
     }
 
-    //optionMenu使用2步
-    //1.创建选项菜单
-    //2.菜单的点击事件
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //添加菜单2种方式
-        //groupid,菜单组的id
-        //itemid,菜单的id
-        //order,排序,数字越小排位靠上
-        //title,菜单标题
-        //添加方式1
-        /*menu.add(0,0,1,"删除");
-        menu.add(0,1,0,"添加");*/
-        //添加方式2
-        getMenuInflater().inflate(R.menu.menu,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    //2.菜单的点击事件
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add:
-                showToast(item.getTitle());
-                break;
-            case R.id.delete:
-                showToast(item.getTitle());
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void showToast(CharSequence msg){
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
-    }
 }
