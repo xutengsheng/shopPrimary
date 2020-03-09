@@ -5,9 +5,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 
+/**
+ * FragmentStatePagerAdapter和FragmentPagerAdapter
+ */
 public class VpFragmentAdapter extends FragmentPagerAdapter {
     private final ArrayList<Fragment> mFragments;
     private final ArrayList<String> mTitles;
@@ -28,7 +32,7 @@ public class VpFragmentAdapter extends FragmentPagerAdapter {
     //页面的数量
     @Override
     public int getCount() {
-        return mFragments.size();
+        return mTitles.size();
     }
 
     //viewpager配合TabLayout+framgnet使用的时候,可以委托adapter去帮我们参加tabLayout的tab

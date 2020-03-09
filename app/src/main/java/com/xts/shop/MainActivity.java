@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         //配合Fragment使用
         VpFragmentAdapter fragmentAdapter =
                 new VpFragmentAdapter(getSupportFragmentManager(),
-                        mFragments,mTitles
+                        mFragments, mTitles
                 );
         mVp.setAdapter(fragmentAdapter);
     }
@@ -105,11 +105,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //对外提供tab的view
-    public View tabView(int position){
+    public View tabView(int position) {
         View inflate = LayoutInflater.from(this).inflate(R.layout.tab, null);
         ImageView iv = inflate.findViewById(R.id.iv);
         TextView tv = inflate.findViewById(R.id.tv);
-        switch (position){
+        switch (position) {
             case 0:
                 //选择器,根据不同的状态选用不同的资源
                 iv.setImageResource(R.drawable.se_main_page);
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         /*menu.add(0,0,1,"删除");
         menu.add(0,1,0,"添加");*/
         //添加方式2
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void showToast(CharSequence msg){
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+    public void showToast(CharSequence msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

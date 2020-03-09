@@ -1,5 +1,6 @@
 package com.xts.shop.net;
 
+import com.xts.shop.bean.HomeBean;
 import com.xts.shop.bean.TopicBean;
 
 import io.reactivex.Flowable;
@@ -13,4 +14,6 @@ public interface ApiService {
     @GET("topic/list")
     Flowable<TopicBean> getTopic(@Query("page") int page, @Query("size") int size);
 
+    @GET("index")
+    Flowable<HomeBean> getHomeData();
 }
