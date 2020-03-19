@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".GoodsDetailActivity">
+    <ScrollView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <!--ScrollView只能有一个子组件，所有用线性布局充当，才能填入更过组件-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!--banner轮播图-->
+            <com.youth.banner.Banner
+                android:id="@+id/banner_goodsdetail"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+            <!--30天无忧退货 那一行-->
+            <LinearLayout
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="30dp">
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:drawableLeft="@drawable/icon_red_circle"
+                    android:text="30天无忧退货"
+                    android:textSize="12dp"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:drawableLeft="@drawable/icon_red_circle"
+                    android:text="48小时快速退款"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:drawableLeft="@drawable/icon_red_circle"
+                    android:text="满88元免邮费"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <!--名字 brief 价钱 三个信息-->
+            <TextView
+                android:id="@+id/txt_name"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:textSize="20dp"
+                android:text="沙发"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txt_brief"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:textSize="10dp"
+                android:text="优质"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txt_price"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:text="599"
+                android:textColor="@color/red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <!--选择规格数量-->
+            <TextView
+                android:layout_marginTop="10dp"
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_height="2dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+                <TextView
+                    android:text="请选择规格数量"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:src="@drawable/icon_arrow_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_height="5dp" />
+            <!--评价区域-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+                <TextView
+                    android:id="@+id/txt_count"
+                    android:text="评价"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="查看全部"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/img_right"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/img_right"
+                    android:src="@drawable/icon_arrow_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <TextView
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_height="2dp" />
+            <!--具体评价数据-->
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/img_avatar"
+                    android:src="@mipmap/ic_launcher"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+                <TextView
+                    android:id="@+id/txt_nickname"
+                    android:layout_toRightOf="@+id/img_avatar"
+                    android:layout_alignBottom="@+id/img_avatar"
+                    android:text="张三"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/txt_addtime"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignBottom="@+id/txt_nickname"
+                    android:text="2020"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/txt_content"
+                    android:layout_below="@+id/img_avatar"
+                    android:layout_alignLeft="@+id/img_avatar"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/img_pic_url"
+                    android:layout_below="@+id/txt_content"
+                    android:layout_alignLeft="@+id/txt_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="80dp"
+                    android:layout_height="60dp" />
+            </RelativeLayout>
+            <TextView
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_height="2dp" />
+            <TextView
+                android:text="商品参数"
+                android:textSize="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <!--商品参数列表-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec_attribute"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_height="2dp" />
+            <!--webview展示详情图片-->
+            <WebView
+                android:id="@+id/web_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/gray"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <RelativeLayout
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="40dp">
+            <ImageView
+                android:id="@+id/img_save"
+                android:src="@drawable/icon_save_normal"
+                android:layout_centerInParent="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:background="@color/red"
+                android:layout_alignParentRight="true"
+                android:layout_width="2dp"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="40dp">
+            <ImageView
+                android:id="@+id/img_cart"
+                android:src="@drawable/ic_menu_shoping_nor"
+                android:layout_centerInParent="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:background="@color/red"
+                android:layout_alignParentRight="true"
+                android:layout_width="2dp"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="40dp">
+            <TextView
+                android:id="@+id/txt_justbuy"
+                android:text="立即购买"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:background="@color/red"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="40dp">
+            <TextView
+                android:id="@+id/txt_addtocart"
+                android:text="加入购物车"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

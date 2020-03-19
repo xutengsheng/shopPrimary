@@ -1,5 +1,6 @@
 package com.xts.shop.net;
 
+import com.xts.shop.bean.GoodsDetailBean;
 import com.xts.shop.bean.HomeBean;
 import com.xts.shop.bean.TopicBean;
 
@@ -16,4 +17,7 @@ public interface ApiService {
 
     @GET("index")
     Flowable<HomeBean> getHomeData();
+
+    @GET("goods/detail")
+    Flowable<GoodsDetailBean> getGoodsDetail(@Query("id") int id);
 }

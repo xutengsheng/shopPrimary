@@ -1,5 +1,6 @@
 package com.xts.shop.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.xts.shop.GoodsDetailActivity;
 import com.xts.shop.R;
 import com.xts.shop.adapter.HomeAdapter;
 import com.xts.shop.bean.HomeBean;
@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.ResourceSubscriber;
@@ -46,7 +45,8 @@ public class MainPageFragment extends Fragment {
     private RecyclerView rv;
     private HomeAdapter adapter;
     private ArrayList<HomeBean.DataBean.BannerBean> banners;
-    private ArrayList<HomeBean.DataBean.NewGoodsListBean> list;
+    private ArrayList<HomeBean.DataBean.CategoryListBean.GoodsListBean> list;
+    //    private ArrayList<HomeBean.DataBean.NewGoodsListBean> list;
 
     public static MainPageFragment newInstance() {
         MainPageFragment fragment = new MainPageFragment();
@@ -88,10 +88,10 @@ public class MainPageFragment extends Fragment {
                     @Override
                     public void onNext(HomeBean homeBean) {
                         List<HomeBean.DataBean.BannerBean> banner = homeBean.getData().getBanner();
-                        List<HomeBean.DataBean.NewGoodsListBean> newGoodsList = homeBean.getData().getNewGoodsList();
+                        List<HomeBean.DataBean.CategoryListBean.GoodsListBean> goodsList = homeBean.getData().getCategoryList().get(0).getGoodsList();
 
                         banners.addAll(banner);
-                        list.addAll(newGoodsList);
+                        list.addAll(goodsList);
                         adapter.notifyDataSetChanged();
                     }
 
@@ -116,10 +116,22 @@ public class MainPageFragment extends Fragment {
 
         rv.addItemDecoration(new DividerItemDecoration(getActivity(), RecyclerView.VERTICAL));
         banners = new ArrayList<>();
+//        list = new ArrayList<>();
         list = new ArrayList<>();
 
-        adapter = new HomeAdapter(getActivity(), banners, list);
+//        adapter = new HomeAdapter(getActivity(), banners, list);
+        adapter = new HomeAdapter(getActivity(),banners,list);
         rv.setAdapter(adapter);
+        adapter.setOnItemClickLis(new HomeAdapter.OnItemClickLis() {
+            @Override
+            public void onItemClick(int position) {
+                //得到id  跳转到详情页面,把id传递过去
+                int id = list.get(position).getId();
+                Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
+            }
+        });
 
     }
 }
