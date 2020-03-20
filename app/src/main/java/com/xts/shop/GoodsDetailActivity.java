@@ -291,7 +291,6 @@ public class GoodsDetailActivity extends AppCompatActivity implements View.OnCli
                                 @Override
                                 public void onNext(AddCarBean addCarBean) {
                                     if (addCarBean.getErrno() == 0) {
-                                        Log.i("tag", "购物车添加成功");
                                         Toast.makeText(GoodsDetailActivity.this,"购物车添加成功",Toast.LENGTH_LONG).show();
                                     }
                                 }
