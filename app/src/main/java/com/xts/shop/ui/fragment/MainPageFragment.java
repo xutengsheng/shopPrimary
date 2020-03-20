@@ -2,6 +2,7 @@ package com.xts.shop.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xts.shop.GoodsDetailActivity;
+import com.xts.shop.MainActivity;
 import com.xts.shop.R;
 import com.xts.shop.adapter.HomeAdapter;
 import com.xts.shop.bean.HomeBean;
@@ -129,7 +131,7 @@ public class MainPageFragment extends Fragment {
                 int id = list.get(position).getId();
                 Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
                 intent.putExtra("id",id);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
 
