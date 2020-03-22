@@ -23,12 +23,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private ArrayList<HomeBean.DataBean.BannerBean> banners;
-    private ArrayList<HomeBean.DataBean.NewGoodsListBean> list;
+    private ArrayList<HomeBean.DataBean.CategoryListBean.GoodsListBean> list;
     private int VIEW_TYPE_ONE = 1;
     private int VIEW_TYPE_TWO = 2;
     private final LayoutInflater inflater;
 
-    public HomeAdapter(Context context, ArrayList<HomeBean.DataBean.BannerBean> banners, ArrayList<HomeBean.DataBean.NewGoodsListBean> list) {
+    public HomeAdapter(Context context, ArrayList<HomeBean.DataBean.BannerBean> banners, ArrayList<HomeBean.DataBean.CategoryListBean.GoodsListBean> list) {
         this.context = context;
         this.banners = banners;
         this.list = list;
@@ -80,11 +80,19 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             }).setBannerTitles(titles).start();
         } else {
-            HomeBean.DataBean.NewGoodsListBean newGoodsListBean = list.get(position - 1);
+            HomeBean.DataBean.CategoryListBean.GoodsListBean goodsList = list.get(position - 1);
             ViewHolderTwo viewHolderTwo = (ViewHolderTwo) holder;
-            viewHolderTwo.tv_home_name.setText(newGoodsListBean.getName());
-            Glide.with(context).load(newGoodsListBean.getList_pic_url()).into(viewHolderTwo.iv_home_item);
+            viewHolderTwo.tv_home_name.setText(goodsList.getName());
+            Glide.with(context).load(goodsList.getList_pic_url()).into(viewHolderTwo.iv_home_item);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItemClickLis.onItemClick(position-1);
+            }
+        });
+
     }
 
     @Override
@@ -120,5 +128,15 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.tv_home_name = (TextView) rootView.findViewById(R.id.tv_home_name);
         }
 
+    }
+
+    private OnItemClickLis mOnItemClickLis;
+
+    public void setOnItemClickLis(OnItemClickLis onItemClickLis) {
+        mOnItemClickLis = onItemClickLis;
+    }
+//条目点击的接口回调
+    public interface OnItemClickLis{
+        void onItemClick(int position);
     }
 }

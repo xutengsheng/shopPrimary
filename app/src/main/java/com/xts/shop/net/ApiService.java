@@ -1,10 +1,16 @@
 package com.xts.shop.net;
 
+import com.xts.shop.bean.AddCarBean;
+import com.xts.shop.bean.CarInfo;
+import com.xts.shop.bean.GoodsDetailBean;
 import com.xts.shop.bean.HomeBean;
 import com.xts.shop.bean.TopicBean;
 
 import io.reactivex.Flowable;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -16,4 +22,19 @@ public interface ApiService {
 
     @GET("index")
     Flowable<HomeBean> getHomeData();
+
+    @GET("goods/detail")
+    Flowable<GoodsDetailBean> getGoodsDetail(@Query("id") int id);
+
+    // 添加购物车
+    // https://cdwan.cn/api/cart/add
+    @POST("cart/add")
+    @FormUrlEncoded
+    Flowable<AddCarBean> addCarInfo(@Field("goodsId") int goodsId,
+                                    @Field("number") int number,
+                                    @Field("productId") int productId);
+    // 获取购物车数据
+    //https://cdwan.cn/api/cart/index
+    @GET("cart/index")
+    Flowable<CarInfo> getCarDtate();
 }
