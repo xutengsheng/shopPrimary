@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".GoodsDetailActivity"></activity>
+        <activity android:name=".activity.SuerBuyActivity"></activity>
+        <activity android:name=".GoodsDetailActivity" />
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

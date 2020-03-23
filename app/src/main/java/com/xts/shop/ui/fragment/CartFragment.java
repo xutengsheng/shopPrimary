@@ -1,6 +1,7 @@
 package com.xts.shop.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,8 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xts.shop.R;
+import com.xts.shop.activity.SuerBuyActivity;
 import com.xts.shop.adapter.CarRlvAdapter;
 import com.xts.shop.bean.CarInfo;
+import com.xts.shop.bean.DelCarInfo;
 import com.xts.shop.bean.GoodsDetailBean;
 import com.xts.shop.net.ApiService;
 
@@ -39,6 +42,9 @@ public class CartFragment extends Fragment implements View.OnClickListener {
 
     private TextView car_tv_count_price;
     private CarRlvAdapter carRlvAdapter;
+    private TextView car_tv_edit_state;
+    private Button car_btn_car_press;
+    private CheckBox car_cb_all;
 
     public static CartFragment newInstance() {
         CartFragment fragment = new CartFragment();
@@ -102,9 +108,16 @@ public class CartFragment extends Fragment implements View.OnClickListener {
         carRlvAdapter = new CarRlvAdapter(getContext());
         car_recycler.setAdapter(carRlvAdapter);
 
-        Button car_btn_car_press = view.findViewById(R.id.car_btn_car_press);
-        CheckBox car_cb_all = view.findViewById(R.id.car_cb_all);
-        TextView car_tv_edit_state = view.findViewById(R.id.car_tv_edit_state);
+        carRlvAdapter.setOnCbClick(new CarRlvAdapter.OnCbClick() {
+            @Override
+            public void cbClick() {
+                setAllPrice();
+            }
+        });
+
+        car_btn_car_press = view.findViewById(R.id.car_btn_car_press);
+        car_cb_all = view.findViewById(R.id.car_cb_all);
+        car_tv_edit_state = view.findViewById(R.id.car_tv_edit_state);
         car_tv_count_price = view.findViewById(R.id.car_tv_count_price);
 
         car_btn_car_press.setOnClickListener(this);
@@ -113,20 +126,97 @@ public class CartFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.car_btn_car_press:
+            case R.id.car_btn_car_press:// 下单按钮
+                ArrayList<CarInfo.DataBean.CartListBean> getAll = carRlvAdapter.getGetAll();
+                String s = car_btn_car_press.getText().toString();
+                if("下单".equals(s)){
 
+                    // 跳转到一个确认下单页面
+                    // 把getAll 集合数据传递到  确定页面显示
+                    Intent intent = new Intent(getContext(), SuerBuyActivity.class);
+                    intent.putExtra("getAll",getAll);
+                    startActivity(intent);
+
+                }else{// 删除   删除选中的条目
+
+                    ArrayList<CarInfo.DataBean.CartListBean> getList = carRlvAdapter.getGetList();
+                    //先删除后台数据
+                    for (int i = 0; i < getAll.size(); i++) {
+                        //删除的网络请求
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(ApiService.sBaseUrl)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                                .build();
+
+                        ApiService apiService = retrofit.create(ApiService.class);
+                        Flowable<DelCarInfo> flowable = apiService.delCarInfo(getAll.get(i).getProduct_id());
+                        int finalI = i;
+                        flowable.subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribeWith(new ResourceSubscriber<DelCarInfo>() {
+                                    @Override
+                                    public void onNext(DelCarInfo delCarInfo) {
+                                        if(delCarInfo.getErrno() == 0){
+                                            Log.i("tag","删除成功");
+                                            getList.remove(getAll.get(finalI));
+                                            carRlvAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable t) {
+                                        Log.i("tag","===> "+t.getMessage());
+                                    }
+                                    @Override
+                                    public void onComplete() {
+
+                                    }
+                                });
+                    }
+                    /*// 再删除界面效果
+
+                    getList.removeAll(getAll);*/
+                }
                 break;
 
-            case R.id.car_cb_all:
-
+            case R.id.car_cb_all://全选
+                boolean checked = car_cb_all.isChecked();
+                carRlvAdapter.getAll(checked);
+                setAllPrice();
                 break;
 
-            case R.id.car_tv_edit_state:
+            case R.id.car_tv_edit_state:// 编辑按钮
 
+                String state = car_tv_edit_state.getText().toString();
+                if("编辑".equals(state)){// 编辑状态    显示的name   隐藏 添加数量
+
+                    car_btn_car_press.setText("删除所有");
+                    car_tv_edit_state.setText("完成");
+                }else{// 完成    显示的 添加商品的数量
+
+                    car_btn_car_press.setText("下单");
+                    car_tv_edit_state.setText("编辑");
+                }
+                carRlvAdapter.setItemVisibility(car_tv_edit_state.getText().toString());
                 break;
         }
+    }
+
+    private void setAllPrice() {
+        //计算一下总价   选中item存储的集合
+        ArrayList<CarInfo.DataBean.CartListBean> getAll = carRlvAdapter.getGetAll();
+        int sum = 0;
+        int count = 0;
+        for (int i = 0; i < getAll.size(); i++) {
+            sum+=getAll.get(i).getRetail_price()*getAll.get(i).getNumber();
+            count +=getAll.get(i).getNumber();
+        }
+        car_cb_all.setText("全部("+count+")");
+        car_tv_count_price.setText("￥"+sum);
     }
 }
