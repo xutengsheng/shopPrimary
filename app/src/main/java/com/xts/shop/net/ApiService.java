@@ -3,6 +3,7 @@ package com.xts.shop.net;
 import com.xts.shop.bean.AddCarBean;
 import com.xts.shop.bean.CarInfo;
 import com.xts.shop.bean.GoodsDetailBean;
+import com.xts.shop.bean.GoodListBean;
 import com.xts.shop.bean.HomeBean;
 import com.xts.shop.bean.TopicBean;
 
@@ -33,8 +34,13 @@ public interface ApiService {
     Flowable<AddCarBean> addCarInfo(@Field("goodsId") int goodsId,
                                     @Field("number") int number,
                                     @Field("productId") int productId);
+
     // 获取购物车数据
     //https://cdwan.cn/api/cart/index
     @GET("cart/index")
     Flowable<CarInfo> getCarDtate();
+
+    @GET("goods/list")
+    Flowable<GoodListBean> getGoodsList(@Query("keyword") String keyword, @Query("page") int page
+            , @Query("size") int size, @Query("sort") String sort, @Query("order") String order, @Query("categoryId") int categoryId);
 }
