@@ -80,7 +80,6 @@ public class CarRlvAdapter extends RecyclerView.Adapter<CarRlvAdapter.CarHolder>
         holder.car_item_add_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String s = holder.car_item_show_count.getText().toString();
                 int i = Integer.parseInt(s);
                 i++;
