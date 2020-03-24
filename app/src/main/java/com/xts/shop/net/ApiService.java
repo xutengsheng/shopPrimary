@@ -2,6 +2,7 @@ package com.xts.shop.net;
 
 import com.xts.shop.bean.AddCarBean;
 import com.xts.shop.bean.CarInfo;
+import com.xts.shop.bean.DelCarInfo;
 import com.xts.shop.bean.GoodListBean;
 import com.xts.shop.bean.GoodsDetailBean;
 import com.xts.shop.bean.HomeBean;
@@ -38,6 +39,12 @@ public interface ApiService {
     //https://cdwan.cn/api/cart/index
     @GET("cart/index")
     Flowable<CarInfo> getCarDtate();
+
+    //删除购物车请求
+    // https://cdwan.cn/api/cart/delete
+    @POST("cart/delete")
+    @FormUrlEncoded
+    Flowable<DelCarInfo> delCarInfo(@Field("productIds") int productIds);
 
     @GET("goods/list")
     Flowable<GoodListBean> getGoodsList(@Query("keyword") String keyword, @Query("page") int page
