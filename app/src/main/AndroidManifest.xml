@@ -13,7 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.SuerBuyActivity"></activity>
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true"></service>
+        <!-- <receiver -->
+        <!-- android:name=".MeReceiver" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="com.test.me_msg"/> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+        <activity android:name=".activity.SuerBuyActivity" />
         <activity android:name=".GoodsDetailActivity" />
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".MainActivity">
